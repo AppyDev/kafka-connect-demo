@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kafka-connect-demo-config
+  namespace: demo
+data:
+  CONNECT_REST_PORT: "8083"
+  CONNECT_GROUP_ID: "jdbc-connect-cluster-avro"
+  CONNECT_CONFIG_STORAGE_TOPIC: "jdbc-connect-avro-config"
+  CONNECT_OFFSET_STORAGE_TOPIC: "jdbc-connect-avro-offsets"
+  CONNECT_STATUS_STORAGE_TOPIC: "jdbc-connect-avro-status"
+  connect-avro-status: "3"
+  CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "3"
+  CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "3"
+  CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: "3"
+  CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
+  CONNECT_VALUE_CONVERTER: "io.confluent.connect.avro.AvroConverter"
+  CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+  CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+  CONNECT_LOG4J_ROOT_LOGLEVEL: "INFO"
+  CONNECT_PLUGIN_PATH: "/etc/kafka-connect/jars"
+  SCHEMA_REGISTRY_HOST_NAME_CONFIG: "kafka-connect-demo.demo"
+  SCHEMA_REGISTRY_URL_CONFIG: "http://kafka-connect-demo.demo.svc.cluster.local:8081"

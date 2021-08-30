@@ -1,0 +1,240 @@
+##################################################################################################
+# kafka-connect-demo service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-connect-demo
+  namespace: demo
+  labels:
+    app: kafka-connect-demo
+spec:
+  ports:
+    - name: http
+      port: 8083
+      targetPort: 8083
+  selector:
+    app: kafka-connect-demo
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-connect-demo
+  namespace: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-connect-demo
+  template:
+    metadata:
+      labels:
+        app: kafka-connect-demo
+        version: v1
+    spec:
+      imagePullSecrets:
+        - name: all-icr-io
+      containers:
+        - image: us.icr.io/kafka-connect-demo/kc:v1
+          imagePullPolicy: Always
+          name: kafka-connect-demo
+          ports:
+            - containerPort: 8083
+          env:
+            - name: CONNECT_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM
+              valueFrom:
+                configMapKeyRef:
+                  name: event-stream-config
+                  key: SSL_ENDPOINT_IDENTIFICATION_ALGORITHM_CONFIG
+            - name: CONNECT_SSL_ENABLED_PROTOCOLS
+              valueFrom:
+                configMapKeyRef:
+                  name: event-stream-config
+                  key: SSL_ENABLED_PROTOCOLS_CONFIG
+            - name: CONNECT_SSL_PROTOCOL
+              valueFrom:
+                configMapKeyRef:
+                  name: event-stream-config
+                  key: SSL_PROTOCOL_CONFIG
+            - name: CONNECT_SASL_MECHANISM
+              valueFrom:
+                configMapKeyRef:
+                  name: event-stream-config
+                  key: SASL_MECHANISM_CONFIG
+            - name: CONNECT_SECURITY_PROTOCOL
+              valueFrom:
+                configMapKeyRef:
+                  name: event-stream-config
+                  key: SECURITY_PROTOCOL_CONFIG
+            - name: CONNECT_BOOTSTRAP_SERVERS
+              valueFrom:
+                configMapKeyRef:
+                  name: event-stream-config
+                  key: BOOTSTRAP_SERVERS_CONFIG
+            - name: CONNECT_CONSUMER_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM
+              valueFrom:
+                configMapKeyRef:
+                  name: event-stream-config
+                  key: SSL_ENDPOINT_IDENTIFICATION_ALGORITHM_CONFIG
+            - name: CONNECT_CONSUMER_SSL_ENABLED_PROTOCOLS
+              valueFrom:
+                configMapKeyRef:
+                  name: event-stream-config
+                  key: SSL_ENABLED_PROTOCOLS_CONFIG
+            - name: CONNECT_CONSUMER_SSL_PROTOCOL
+              valueFrom:
+                configMapKeyRef:
+                  name: event-stream-config
+                  key: SSL_PROTOCOL_CONFIG
+            - name: CONNECT_CONSUMER_SASL_MECHANISM
+              valueFrom:
+                configMapKeyRef:
+                  name: event-stream-config
+                  key: SASL_MECHANISM_CONFIG
+            - name: CONNECT_CONSUMER_SECURITY_PROTOCOL
+              valueFrom:
+                configMapKeyRef:
+                  name: event-stream-config
+                  key: SECURITY_PROTOCOL_CONFIG
+            - name: CONNECT_CONSUMER_BOOTSTRAP_SERVERS
+              valueFrom:
+                configMapKeyRef:
+                  name: event-stream-config
+                  key: BOOTSTRAP_SERVERS_CONFIG
+            - name: CONNECT_CONSUMER_SASL_JAAS_CONFIG
+              valueFrom:
+                secretKeyRef:
+                  name: sasl-jaas-secret
+                  key: sasl-jaas-config
+            - name: CONNECT_SASL_JAAS_CONFIG
+              valueFrom:
+                secretKeyRef:
+                  name: sasl-jaas-secret
+                  key: sasl-jaas-config
+            - name: CONNECT_PRODUCER_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM
+              valueFrom:
+                configMapKeyRef:
+                  name: event-stream-config
+                  key: SSL_ENDPOINT_IDENTIFICATION_ALGORITHM_CONFIG
+            - name: CONNECT_PRODUCER_SSL_ENABLED_PROTOCOLS
+              valueFrom:
+                configMapKeyRef:
+                  name: event-stream-config
+                  key: SSL_ENABLED_PROTOCOLS_CONFIG
+            - name: CONNECT_PRODUCER_SSL_PROTOCOL
+              valueFrom:
+                configMapKeyRef:
+                  name: event-stream-config
+                  key: SSL_PROTOCOL_CONFIG
+            - name: CONNECT_PRODUCER_SASL_MECHANISM
+              valueFrom:
+                configMapKeyRef:
+                  name: event-stream-config
+                  key: SASL_MECHANISM_CONFIG
+            - name: CONNECT_PRODUCER_SECURITY_PROTOCOL
+              valueFrom:
+                configMapKeyRef:
+                  name: event-stream-config
+                  key: SECURITY_PROTOCOL_CONFIG
+            - name: CONNECT_PRODUCER_BOOTSTRAP_SERVERS
+              valueFrom:
+                configMapKeyRef:
+                  name: event-stream-config
+                  key: BOOTSTRAP_SERVERS_CONFIG
+            - name: CONNECT_PRODUCER_SASL_JAAS_CONFIG
+              valueFrom:
+                secretKeyRef:
+                  name: sasl-jaas-secret
+                  key: sasl-jaas-config
+            - name: CONNECT_REST_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-connect-demo-config
+                  key: CONNECT_REST_PORT
+            - name: CONNECT_GROUP_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-connect-demo-config
+                  key: CONNECT_GROUP_ID
+            - name: CONNECT_CONFIG_STORAGE_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-connect-demo-config
+                  key: CONNECT_CONFIG_STORAGE_TOPIC
+            - name: CONNECT_OFFSET_STORAGE_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-connect-demo-config
+                  key: CONNECT_OFFSET_STORAGE_TOPIC
+            - name: CONNECT_STATUS_STORAGE_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-connect-demo-config
+                  key: CONNECT_STATUS_STORAGE_TOPIC
+            - name: CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-connect-demo-config
+                  key: CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR
+            - name: CONNECT_STATUS_STORAGE_REPLICATION_FACTOR
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-connect-demo-config
+                  key: CONNECT_STATUS_STORAGE_REPLICATION_FACTOR
+            - name: CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-connect-demo-config
+                  key: CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR
+            - name: CONNECT_KEY_CONVERTER
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-connect-demo-config
+                  key: CONNECT_KEY_CONVERTER
+            - name: CONNECT_VALUE_CONVERTER
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-connect-demo-config
+                  key: CONNECT_VALUE_CONVERTER
+            - name: CONNECT_INTERNAL_VALUE_CONVERTER
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-connect-demo-config
+                  key: CONNECT_INTERNAL_VALUE_CONVERTER
+            - name: CONNECT_INTERNAL_KEY_CONVERTER
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-connect-demo-config
+                  key: CONNECT_INTERNAL_KEY_CONVERTER
+            - name: CONNECT_LOG4J_ROOT_LOGLEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-connect-demo-config
+                  key: CONNECT_LOG4J_ROOT_LOGLEVEL
+            - name: CONNECT_PLUGIN_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-connect-demo-config
+                  key: CONNECT_PLUGIN_PATH
+            - name: CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-connect-demo-config
+                  key: SCHEMA_REGISTRY_URL_CONFIG
+            - name: CONNECT_REST_ADVERTISED_HOST_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-connect-demo-config
+                  key: SCHEMA_REGISTRY_HOST_NAME_CONFIG
+          volumeMounts:
+            - name: db-jks-secret
+              mountPath: /etc/kafka-connect/ibm-ssl-truststore.jks
+              subPath: ibm-ssl-truststore.jks
+              readOnly: true
+      volumes:
+        - name: db-jks-secret
+          secret:
+            secretName: db-jks-secret
+            items:
+              - key: ibm-ssl-truststore.jks
+                path: ibm-ssl-truststore.jks
