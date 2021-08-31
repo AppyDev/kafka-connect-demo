@@ -4,7 +4,7 @@ metadata:
   name: event-stream-config
   namespace: demo
 data:
-  BOOTSTRAP_SERVERS_CONFIG: "broker-3-h7x6tw53g7yg19y7.kafka.svc08.us-south.eventstreams.cloud.ibm.com:9093,broker-2-h7x6tw53g7yg19y7.kafka.svc08.us-south.eventstreams.cloud.ibm.com:9093,broker-5-h7x6tw53g7yg19y7.kafka.svc08.us-south.eventstreams.cloud.ibm.com:9093,broker-0-h7x6tw53g7yg19y7.kafka.svc08.us-south.eventstreams.cloud.ibm.com:9093,broker-1-h7x6tw53g7yg19y7.kafka.svc08.us-south.eventstreams.cloud.ibm.com:9093,broker-4-h7x6tw53g7yg19y7.kafka.svc08.us-south.eventstreams.cloud.ibm.com:9093"
+  BOOTSTRAP_SERVERS_CONFIG: "broker-1-bgtcr8bcc4kqkcnd.kafka.svc10.us-south.eventstreams.cloud.ibm.com:9093,broker-2-bgtcr8bcc4kqkcnd.kafka.svc10.us-south.eventstreams.cloud.ibm.com:9093,broker-0-bgtcr8bcc4kqkcnd.kafka.svc10.us-south.eventstreams.cloud.ibm.com:9093,broker-3-bgtcr8bcc4kqkcnd.kafka.svc10.us-south.eventstreams.cloud.ibm.com:9093,broker-4-bgtcr8bcc4kqkcnd.kafka.svc10.us-south.eventstreams.cloud.ibm.com:9093,broker-5-bgtcr8bcc4kqkcnd.kafka.svc10.us-south.eventstreams.cloud.ibm.com:9093"
   SECURITY_PROTOCOL_CONFIG: "SASL_SSL"
   SASL_MECHANISM_CONFIG: "PLAIN"
   SSL_PROTOCOL_CONFIG: "TLSv1.2"
