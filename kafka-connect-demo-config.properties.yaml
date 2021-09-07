@@ -21,3 +21,5 @@ data:
   CONNECT_PLUGIN_PATH: "/etc/kafka-connect/jars"
   SCHEMA_REGISTRY_HOST_NAME_CONFIG: "kafka-connect-demo.demo"
   SCHEMA_REGISTRY_URL_CONFIG: "http://kafka-connect-demo.demo.svc.cluster.local:8081"
+  CONNECT_CONFIG_PROVIDERS: "file"
+  CONNECT_CONFIG_PROVIDERS_FILE_CLASS: "org.apache.kafka.common.config.provider.FileConfigProvider"

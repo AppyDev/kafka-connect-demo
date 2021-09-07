@@ -226,10 +226,28 @@ spec:
                 configMapKeyRef:
                   name: kafka-connect-demo-config
                   key: SCHEMA_REGISTRY_HOST_NAME_CONFIG
+            - name: CONNECT_CONFIG_PROVIDERS
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-connect-demo-config
+                  key: CONNECT_CONFIG_PROVIDERS
+            - name: CONNECT_CONFIG_PROVIDERS_FILE_CLASS
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-connect-demo-config
+                  key: CONNECT_CONFIG_PROVIDERS_FILE_CLASS
           volumeMounts:
             - name: db-jks-secret
               mountPath: /etc/kafka-connect/ibm-ssl-truststore.jks
               subPath: ibm-ssl-truststore.jks
+              readOnly: true
+            - name: cloudant-secret
+              mountPath: /data/cloudant_credentials.properties
+              subPath: cloudant_credentials.properties
+              readOnly: true
+            - name: db2-secret
+              mountPath: /data/db2_credentials.properties
+              subPath: db2_credentials.properties
               readOnly: true
       volumes:
         - name: db-jks-secret
@@ -238,3 +256,15 @@ spec:
             items:
               - key: ibm-ssl-truststore.jks
                 path: ibm-ssl-truststore.jks
+        - name: cloudant-secret
+          secret:
+            secretName: cloudant-secret
+            items:
+              - key: cloudant_credentials.properties
+                path: cloudant_credentials.properties
+        - name: db2-secret
+          secret:
+            secretName: db2-secret
+            items:
+              - key: db2_credentials.properties
+                path: db2_credentials.properties

@@ -9,14 +9,19 @@
 > kubectl apply -f kafka-connect-demo-config.properties.yaml
 > 
 > kubectl apply -f event-streams-sasl-jaas-secret.yaml
-> 
-> sh db-jks-secret.sh
 
 ### Deploy kafka connect
 > kubectl apply -f kafka-connect-deployment.yaml
 
 ### Port Forward
 > kubectl -n demo port-forward $(kubectl -n demo get pod -l app=kafka-connect-demo -o jsonpath="{.items[0].metadata.name}") 8083:8083 &
+
+### Apply connection credentials for data-sources
+> sh db-jks-secret.sh
+>
+> kubectl apply -f cloudant-secret.yaml
+>
+> kubectl apply -f db2-secret.yaml
 
 ### Deploy connectors
 > sh users-db2-sink.sh
