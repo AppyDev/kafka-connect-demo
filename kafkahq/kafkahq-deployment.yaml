@@ -1,0 +1,49 @@
+##############################################################################################################
+# KafkaHQ deployment
+##############################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafkahq
+  namespace: demo
+  labels:
+    app: kafkahq
+spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: kafkahq
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafkahq
+  namespace: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafkahq
+  template:
+    metadata:
+      labels:
+        app: kafkahq
+        version: v1
+    spec:
+      containers:
+        - image: tchiotludo/kafkahq
+          imagePullPolicy: IfNotPresent
+          name: kafkahq
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: kafkahq-config
+              mountPath: /app/application.yml
+              subPath: application.yml
+              readOnly: false
+      volumes:
+        - name: kafkahq-config
+          configMap:
+            name: kafkahq-config
